@@ -3,22 +3,33 @@ from multiselectfield import MultiSelectField
 
 # Create your models here.
 class MenuItem(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
     #station = models.CharField(max_length=50)
-    DIETARY_CHOICES = [
-        (1, 'prop-vegetarian'),
-        (2, 'prop-vegan'),
-        (3, 'prop-made_without_gluten'),
-        (4, 'allergen-has_egg'),
-        (5, 'allergen-has_soy'),
-        (6, 'allergen-has_wheat'),
-        (7, 'allergen-has_milk'),
-        (8, 'allergen-has_fish'),
-        (9, 'allergen-has_shellfish'),
-        (10, 'allergen-has_peanut'),
-        (11, 'allergen-has_tree_nuts')
+    """DIETARY_CHOICES = [
+        ('prop-vegetarian', 'vegetarian'),
+        ('prop-vegan', 'vegan'),
+        ('prop-made_without_gluten', 'gluten free'),
+        ('allergen-has_egg', 'has eggs'),
+        ('allergen-has_soy', 'has soy'),
+        ('allergen-has_wheat', 'has wheat'),
+        ('allergen-has_milk', 'has milk'),
+        ('allergen-has_fish', 'has fish'),
+        ('allergen-has_shellfish', 'has shellfish'),
+        ('allergen-has_peanut', 'has peanuts'),
+        ('allergen-has_tree_nuts', 'has tree nuts')
     ]
-    dietary = MultiSelectField(choices=DIETARY_CHOICES)
+    dietary = MultiSelectField(choices=DIETARY_CHOICES)"""
+    isVegetarian = models.BooleanField(default = False)
+    isVegan = models.BooleanField(default = False)
+    glutenFree = models.BooleanField(default = False)
+    hasEggs = models.BooleanField(default = False)
+    hasSoy = models.BooleanField(default = False)
+    hasWheat = models.BooleanField(default = False)
+    hasMilk = models.BooleanField(default = False)
+    hasFish = models.BooleanField(default = False)
+    hasShellfish = models.BooleanField(default = False)
+    hasPeanuts = models.BooleanField(default = False)
+    hasTreenuts = models.BooleanField(default = False)
 
     def __str__(self):
         return self.name
@@ -31,15 +42,15 @@ class Location(models.Model):
 
 class Menu(models.Model):
     MEALS = [
-        (1, 'Continental'),
-        (2, 'Breakfast'),
-        (3, 'Brunch'),
-        (4, 'Lunch'),
-        (5, 'Late Lunch'),
-        (6, 'Midday'),
-        (7, 'Dinner'),
-        (8, 'Lite Dinner'),
-        (9, 'Late Night'),
+        ('Continental', 'Continental'),
+        ('Breakfast', 'Breakfast'),
+        ('Brunch', 'Brunch'),
+        ('Lunch', 'Lunch'),
+        ('Late Lunch', 'Late Lunch'),
+        ('Midday', 'Midday'),
+        ('Dinner', 'Dinner'),
+        ('Lite Dinner', 'Lite Dinner'),
+        ('Late Night', 'Late Night'),
     ]
     meal = models.CharField(max_length=50, choices=MEALS)
     date = models.DateField()
