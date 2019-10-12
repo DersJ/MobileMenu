@@ -5,9 +5,11 @@ from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from phonenumber_field.modelfields import PhoneNumberField
-
+from multiselectfield import MultiSelectField
 
 from account import managers
+
+from scraper.models import *
 
 
 
@@ -76,6 +78,23 @@ class User(PermissionsMixin, AbstractBaseUser):
         blank=False, 
         unique=True,
         verbose_name=_('phone number'))
+
+    locations = models.ManyToManyField(Location)
+
+    MEALS = [
+        (1, 'Continental'),
+        (2, 'Breakfast'),
+        (3, 'Brunch'),
+        (4, 'Lunch'),
+        (5, 'Late Lunch'),
+        (6, 'Midday'),
+        (7, 'Dinner'),
+        (8, 'Lite Dinner'),
+        (9, 'Late Night'),
+    ]
+    meals = MultiSelectField(choices=MEALS, default='')
+
+
 
     # Custom Manager
     objects = managers.UserManager()

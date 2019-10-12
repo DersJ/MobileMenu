@@ -1,1 +1,23 @@
-profile
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+    {% if user.name %}
+    <h4>{{user.name}}</h4>
+    <h5>@{{user.username}}</h4>
+
+    {% else %}
+    <h4>@{{user.username}}</h4>
+    {% endif %}
+
+    <p>{{user.email}}</p>
+    
+    <h1>Account Preferences</h1>
+    
+    <form method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button class="btn btn-primary"type="submit">Save</button>
+    </form>
+
+
+    {% endblock %}

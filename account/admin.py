@@ -16,6 +16,10 @@ class UserAdmin(auth_admin.UserAdmin):
         (_('Personal Information'), {
             'fields': ('name', 'email', 'phone'),
         }),
+
+        (_('Subscription Data'), {
+            'fields': ('meals', 'locations'),
+        }),
         (_('Permissions'), {
             'fields': (
                 'is_active',
