@@ -8,7 +8,7 @@ class SignUpForm(UserCreationForm):
 	
 	name = forms.CharField(max_length=30, required=False, help_text='Optional.')
 	email = forms.EmailField(max_length=254, help_text='Inform a valid email address.')
-	phone = PhoneNumberField()
+	phone = PhoneNumberField(label="Phone Number", help_text='We will never share your phone number with anyone.')
 	
 
 	class Meta:
