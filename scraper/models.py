@@ -2,12 +2,6 @@ from django.db import models
 from multiselectfield import MultiSelectField
 
 # Create your models here.
-class Menu(models.Model):
-    location = models.charField(max_length=50)
-    meal = models.charField(max_length=50)
-    date = models.DateField()
-    menuItems = models.ManyToManyField(MenuItem)
-
 class MenuItem(models.Model):
     name = models.CharField(max_length=50)
     #station = models.CharField(max_length=50)
@@ -25,3 +19,25 @@ class MenuItem(models.Model):
         ('allergen-has_tree_nuts', 11)
     ]
     dietary = MultiSelectField(choices=DIETARY_CHOICES)
+
+    def __str__(self):
+        """
+        Get a string identifying the user.
+        Returns:
+            The user's name.
+        """
+        return self.name
+
+class Menu(models.Model):
+    location = models.CharField(max_length=50)
+    meal = models.CharField(max_length=50)
+    date = models.DateField()
+    menuItems = models.ManyToManyField(MenuItem)
+
+    def __str__(self):
+        """
+        Get a string identifying the user.
+        Returns:
+            The user's name.
+        """
+        return location + ' ' + date

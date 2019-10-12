@@ -1,1 +1,16 @@
-signup
+
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Sign Up</h2>
+    <div class="alert alert-info">
+      <p class="m-0">Already have an account? <a href="{% url 'login' %}">Log In</a>.</p>
+    </div>
+    <form method="post">
+      {% csrf_token %}
+      {{ form }}
+      <button class="btn btn-primary"type="submit">Sign Up</button>
+    </form>
+  </div>
+</div>
+{% endblock %}
