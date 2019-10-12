@@ -11,3 +11,7 @@ class MenuAdmin(admin.ModelAdmin):
 class MenuItemAdmin(admin.ModelAdmin):
     pass
 
+
+@admin.register(models.Location)
+class LocationAdmin(admin.ModelAdmin):
+    pass
