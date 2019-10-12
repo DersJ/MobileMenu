@@ -1,11 +1,14 @@
+Babel==2.7.0
 beautifulsoup4==4.8.1
 certifi==2019.9.11
 chardet==3.0.4
 dj-database-url==0.5.0
 Django==2.2.6
+django-phonenumber-field==3.0.1
 gunicorn==19.9.0
 idna==2.8
-psycopg2==2.8.3
+phonenumbers==8.10.20
+psycopg2-binary==2.8.3
 python-decouple==3.1
 pytz==2019.3
 requests==2.22.0

@@ -6,7 +6,6 @@ from django.utils import timezone
 from django.views import generic
 
 from account.forms import SignUpForm
-from housing import models
 
 
 def loginview(request):
@@ -25,4 +24,17 @@ def signup(request):
             return redirect('/')
     else:
         form = SignUpForm()
-    return render(request, 'registration/signup.html', {'form': form})
+    return render(request, 'account/signup.html', {'form': form})
+
+class ProfileView(generic.DetailView):
+    template_name = 'account/profile.html'
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        now = timezone.now()
+
+        return context
+
+
+    def get_object(self):
+        return self.request.user
