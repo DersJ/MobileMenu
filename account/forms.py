@@ -24,3 +24,7 @@ class UpdateProfileForm(ModelForm):
 	class Meta:
 		model = get_user_model()
 		fields = ('email', 'phone', 'locations', 'meals')
+	
+	def __init__(self, *args, **kwargs):
+		super(UpdateProfileForm, self).__init__(*args, **kwargs)
+		self.fields["locations"].widget = forms.widgets.CheckboxSelectMultiple()
