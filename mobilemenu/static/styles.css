@@ -3,19 +3,37 @@ body {
 
 }
 
+.main {
+    height: 100vh;
+}
+
 .hero {
     background-image: url("greens.jpeg");
     background-position: top center;
     background-repeat: no-repeat;
     background-size: cover;
-    position: relative;
-    min-height: 94vh;
+    height: calc(100vh - 56px);
+
+
 
 }
 
 .navbar-default {
     background-color: white;
     color: black;
+   
+}
+
+.gray {
+    background-color:rgb(104, 104, 108);
+}
+
+.login {
+    height: calc(100vh - 56px);
+}
+
+small.form-text.text-muted {
+    color: white!important;
 }
 
 
