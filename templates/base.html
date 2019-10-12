@@ -27,8 +27,8 @@
 <body>
 
   <!-- Add your site or application content here -->
-  <div>
-      <nav class="navbar navbar-expand bg-white">
+  <div class="main">
+      <nav class="navbar navbar-expand bg-white shadow-lg">
           <a class="navbar-brand text-dark" href="{% url 'home' %}">MobileMenu
               <i class="fas fa-utensils"></i>
           </a>
@@ -42,18 +42,14 @@
               </ul>
           </div>
       </nav>
-  </div>
  
 
     {% block main %}
-    <main class="container">
-      <div class="row">
-        <div class="col">
           {% block content %}{% endblock %}
-        </div>
-      </div>
-    </main>
   {% endblock %}
+
+  </div>
+
 
 
     
