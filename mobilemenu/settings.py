@@ -80,6 +80,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 WSGI_APPLICATION = 'mobilemenu.wsgi.application'
 
 LOGIN_REDIRECT_URL = '/account/profile'
+LOGOUT_REDIRECT_URL = '/'
 
 
 # Database

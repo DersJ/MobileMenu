@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from scraper import getItems
+from .scraper import getItems
 
 # Create your views here.
 def scraperview(request):
