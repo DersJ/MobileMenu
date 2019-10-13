@@ -1,49 +1,29 @@
 import urllib.request
+import datetime
 from bs4 import BeautifulSoup
 from .models import *
 
-def getItems(url, loc):
+def getItems(url):
     page = urllib.request.urlopen(url)
     soup = BeautifulSoup(page, 'html.parser')
 
     bigDiv = soup.find("div", {'id': 'menu-tabs'})
     allitems = bigDiv.find_all("a", {"class": 'show-nutrition'})
 
-    class Item:
-        def __init__(self, tag):
-            self.name = tag.string
-            self.classes = tag['class']
-
-
-    #items = []
-    #for item in allitems:
-    item = allitems[0]
-    veget = item['class'].find('prop-vegetarian')
-    vegan = item['class'].find('prop-vegan')
-    gluten = item['class'].find('prop-made_without_gluten')
-    eggs = item['class'].find('allergen-has_egg')
-    soy = item['class'].find('allergen-has_soy')
-    wheat = item['class'].find('allergen-has_wheat')
-    milk = item['class'].find('allergen-has_milk')
-    fish = item['class'].find('allergen-has_fish')
-    shellfish = item['class'].find('allergen-has_shellfish')
-    peanut = item['class'].find('allergen-has_peanut')
-    treenuts = item['class'].find('allergen-has_tree_nuts')
-    a = MenuItem(name=item.string,
-        isVegetarian = veget,
-        isVegan = vegan,
-        glutenFree = gluten,
-        hasEggs = eggs,
-        hasSoy = soy,
-        hasWheat = wheat,
-        hasMilk = milk,
-        hasFish = fish,
-        hasShellfish = shellfish,
-        hasPeanuts = peanut,
-        hasTreenuts = treenuts)
-    a.save()
-        #items.append(Item(item))
-    #return items
+    for item in allitems:
+        if len(MenuItem.objects.filter(name = item.string)) == 0:
+            a = MenuItem.objects.create(name = item.string,
+                isVegetarian = 'prop-vegetarian' in item['class'],
+                isVegan = 'prop-vegan' in item['class'],
+                glutenFree = 'prop-made_without_gluten' in item['class'],
+                hasEggs = 'allergen-has_egg' in item['class'],
+                hasSoy = 'allergen-has_soy' in item['class'],
+                hasWheat = 'allergen-has_wheat' in item['class'],
+                hasMilk = 'allergen-has_milk' in item['class'],
+                hasFish = 'allergen-has_fish' in item['class'],
+                hasShellfish = 'allergen-has_shellfish' in item['class'],
+                hasPeanuts =  'allergen-has_peanut' in item['class'],
+                hasTreenuts = 'allergen-has_tree_nuts' in item['class'])
 
 def getMenu(url, loc):
     page = urllib.request.urlopen(url)
@@ -53,22 +33,18 @@ def getMenu(url, loc):
     ctabsnav = soup.find("div", {'class': 'c-tabs-nav'})
     mealtimes = ctabsnav.find_all("a")
     indivMeal = bigDiv.find_all("div", {"class": 'c-tab'})
+    meal_iter = 0
 
-    class Meal:
-        def __init__(self, location, time, itemlist):
-            self.location = location
-            self.time = time
-            self.itemlist = itemlist
-
-    menu = []
     for meal in mealtimes:
-        mealmenu = indivMeal[int(meal['data-tabid'])].find_all("a")
-        time = meal.find("div").string.split("(")[0].rstrip()
-        menu.append(Meal(loc, time, mealmenu))
-    return menu
+        a = Menu.objects.create(
+            meal = meal.find("div").string.split("(")[0].rstrip(),
+            date = datetime.date.today(),
+            location = Location.objects.filter(name = loc)[0]
+        )
+        this_meal_items = indivMeal[meal_iter].find_all("a", {"class": "show-nutrition"})
+        for item in this_meal_items:
+            item_object = MenuItem.objects.filter(name = item.string)[0]
+            a.menuItems.add(item_object)
 
-chase = "https://dining.unc.edu/locations/chase/"
-lenoir = "https://dining.unc.edu/locations/top-of-lenoir/"
-
-getMenu(chase, "Chase")
-#getMenu(pageL, "Lenoir")
+        a.save()
+        meal_iter += 1

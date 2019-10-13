@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
-from .scraper import getItems
+from .scraper import *
 
 # Create your views here.
 def scraperview(request):
-    getItems("https://dining.unc.edu/locations/chase/", "chase")
+    lenoir = "https://dining.unc.edu/locations/top-of-lenoir/"
+    chase = "https://dining.unc.edu/locations/chase/"
+    #getMenu(chase, "Chase")
     return redirect('/')
