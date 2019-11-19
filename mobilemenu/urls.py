@@ -18,11 +18,12 @@ from django.urls import path
 from django.conf.urls import include
 
 from django.views.generic import TemplateView
-from scraper.views import scraperview
+from scraper.views import scraperview, texterview
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('account/', include('account.urls')),
     path('', TemplateView.as_view(template_name='landing.html'), name='home'),
     path('scraper/', scraperview, name='scraper'),
+    path('texter/', texterview, name='texter')
 ]
